@@ -1,6 +1,7 @@
 import { Cookware, Ingredient, Recipe, Timer } from 'cooklang'
 import { TextFileView, setIcon, TFile, Keymap, WorkspaceLeaf, ViewStateResult, Notice } from 'obsidian'
 import { CookLangSettings } from './settings';
+import i18n from './locales/locales';
 import { Howl } from 'howler';
 import alarmMp3 from './alarm.mp3'
 import timerMp3 from './timer.mp3'
@@ -14,8 +15,8 @@ export class CookView extends TextFileView {
   recipe: Recipe;
   changeModeButton: HTMLElement;
   currentView: 'source' | 'preview';
-  alarmAudio:Howl
-  timerAudio:Howl
+  alarmAudio: Howl;
+  timerAudio: Howl;
 
   constructor(leaf: WorkspaceLeaf, settings: CookLangSettings) {
     super(leaf);
@@ -44,7 +45,7 @@ export class CookView extends TextFileView {
     });
 
     // add the action to switch between source and preview mode
-    this.changeModeButton = this.addAction('lines-of-text', 'Preview (Ctrl+Click to open in new pane)', (evt) => this.switchMode(evt), 17);
+    this.changeModeButton = this.addAction('lines-of-text', i18n('Preview (Ctrl+Click to open in new pane)'), (evt) => this.switchMode(evt), 17);
 
     // undocumented: Get the current default view mode to switch to
     let defaultViewMode = (this.app.vault as any).getConfig('defaultViewMode');
@@ -87,7 +88,7 @@ export class CookView extends TextFileView {
       if (mode === 'preview') {
         this.currentView = 'preview';
         setIcon(this.changeModeButton, 'pencil');
-        this.changeModeButton.setAttribute('aria-label', 'Edit (Ctrl+Click to edit in new pane)');
+        this.changeModeButton.setAttribute('aria-label', i18n('Edit (Ctrl+Click to edit in new pane)'));
 
         this.renderPreview(this.recipe);
         this.previewEl.style.setProperty('display', 'block');
@@ -97,7 +98,7 @@ export class CookView extends TextFileView {
       else {
         this.currentView = 'source';
         setIcon(this.changeModeButton, 'lines-of-text');
-        this.changeModeButton.setAttribute('aria-label', 'Preview (Ctrl+Click to open in new pane)');
+        this.changeModeButton.setAttribute('aria-label', i18n('Preview (Ctrl+Click to open in new pane)'));
 
         this.previewEl.style.setProperty('display', 'none');
         this.sourceEl.style.setProperty('display', 'block');
@@ -199,7 +200,7 @@ export class CookView extends TextFileView {
 
     if(this.settings.showIngredientList) {
       // Add the Ingredients header
-      this.previewEl.createEl('h2', { cls: 'ingredients-header', text: 'Ingredients' });
+      this.previewEl.createEl('h2', { cls: 'ingredients-header', text: i18n('Ingredients') });
 
       // Add the ingredients list
       const ul = this.previewEl.createEl('ul', { cls: 'ingredients' });
@@ -231,7 +232,7 @@ export class CookView extends TextFileView {
 
     if (this.settings.showTimersList) {
       // Add the Cookware header
-      this.previewEl.createEl('h2', { cls: 'timers-header', text: 'Timers' });
+      this.previewEl.createEl('h2', { cls: 'timers-header', text: i18n('Timers') });
 
       // Add the Cookware list
       const ul = this.previewEl.createEl('ul', { cls: 'timers' });
@@ -264,13 +265,13 @@ export class CookView extends TextFileView {
       let time = recipe.calculateTotalTime();
       if(time > 0) {
         // Add the Timers header
-        this.previewEl.createEl('h2', { cls: 'time-header', text: 'Total Time' });
+        this.previewEl.createEl('h2', { cls: 'time-header', text: i18n('Total Time') });
         this.previewEl.createEl('p', { cls: 'time', text: this.formatTime(time) });
       }
     }
 
     // add the method header
-    this.previewEl.createEl('h2', { cls: 'method-header', text: 'Method' });
+    this.previewEl.createEl('h2', { cls: 'method-header', text: i18n('Method') });
 
     // add the method list
     const mol = this.previewEl.createEl('ol', { cls: 'method' });
