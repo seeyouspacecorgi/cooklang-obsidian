@@ -1,9 +1,10 @@
-import './styles.scss'
+import './styles.scss';
 import { Plugin, WorkspaceLeaf, addIcon } from 'obsidian';
-import './lib/codemirror'
-import './mode/cook/cook'
-import { CookView } from './cookView'
-import { CookLangSettings, CookSettingsTab } from './settings'
+import './lib/codemirror';
+import './mode/cook/cook';
+import { CookView } from './cookView';
+import { CookLangSettings, CookSettingsTab } from './settings';
+import i18n from './locales/locales';
 
 export default class CookPlugin extends Plugin {
 
@@ -29,7 +30,7 @@ export default class CookPlugin extends Plugin {
 
     this.addCommand({
       id: "create-cook",
-      name: "Create new recipe",
+      name: i18n("Create new recipe"),
       callback: async () => {
         const newFile = await this.cookFileCreator();
         this.app.workspace.getLeaf().openFile(newFile);
@@ -38,7 +39,7 @@ export default class CookPlugin extends Plugin {
 
     this.addCommand({
       id: "create-cook-new-pane",
-      name: "Create recipe in new pane",
+      name: i18n("Create recipe in new pane"),
       callback: async () => {
         const newFile = await this.cookFileCreator();
         await this.app.workspace.getLeaf(true).openFile(newFile);
@@ -48,7 +49,7 @@ export default class CookPlugin extends Plugin {
     // register the convert to cook command
     this.addCommand({
       id: "convert-to-cook",
-      name: "Convert markdown file to `.cook`",
+      name: i18n("Convert markdown file to `.cook`"),
       checkCallback: (checking:boolean) => {
         const file = this.app.workspace.getActiveFile();
         const isMd = file.extension === "md";
@@ -82,10 +83,10 @@ export default class CookPlugin extends Plugin {
     else if(!newFileFolderPath.endsWith('/')) newFileFolderPath += '/';
 
     const originalPath = newFileFolderPath;
-    newFileFolderPath = newFileFolderPath + 'Untitled.cook';
+    newFileFolderPath = `${newFileFolderPath}${i18n('Untitled')}.cook`;
     let i = 0;
     while(this.app.vault.getAbstractFileByPath(newFileFolderPath)) {
-      newFileFolderPath = `${originalPath}Untitled ${++i}.cook`;
+      newFileFolderPath = `${originalPath}${i18n('Untitled')} ${++i}.cook`;
     }
     const newFile = await this.app.vault.create(newFileFolderPath, '');
     return newFile;
