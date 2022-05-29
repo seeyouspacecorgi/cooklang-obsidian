@@ -221,7 +221,7 @@ export class CookView extends TextFileView {
 
     if(this.settings.showCookwareList) {
       // Add the Cookware header
-      this.previewEl.createEl('h2', { cls: 'cookware-header', text: 'Cookware' });
+      this.previewEl.createEl('h2', { cls: 'cookware-header', text: i18n('Cookware') });
 
       // Add the Cookware list
       const ul = this.previewEl.createEl('ul', { cls: 'cookware' });
@@ -231,10 +231,10 @@ export class CookView extends TextFileView {
     }
 
     if (this.settings.showTimersList) {
-      // Add the Cookware header
+      // Add the Timer header
       this.previewEl.createEl('h2', { cls: 'timers-header', text: i18n('Timers') });
 
-      // Add the Cookware list
+      // Add the Timer list
       const ul = this.previewEl.createEl('ul', { cls: 'timers' });
       recipe.timers.forEach(item => {
         const li = ul.createEl('li');
@@ -270,10 +270,10 @@ export class CookView extends TextFileView {
       }
     }
 
-    // add the method header
+    // Add the Method header
     this.previewEl.createEl('h2', { cls: 'method-header', text: i18n('Method') });
 
-    // add the method list
+    // Add the Method list
     const mol = this.previewEl.createEl('ol', { cls: 'method' });
     recipe.steps.forEach(step => {
       const mli = mol.createEl('li');
