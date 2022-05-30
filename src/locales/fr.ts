@@ -26,7 +26,8 @@ export default {
   'Show the total of all timers at the top of the recipe': 'Affiche la durée totale des minuteurs au-dessus de la recette',
   'Running Timers Tick': 'Bruit du Minuteur',
   'Alarm When Timers End': 'Sonnerie du Minuteur',
-
+  'Show Metadata': 'Afficher les métadonnées',
+  'Show the Metadata at the top of the recipe': 'Affiche les métadonnées au-dessus de la recette',
 
   //Headers
   'Ingredients': 'Ingrédients',

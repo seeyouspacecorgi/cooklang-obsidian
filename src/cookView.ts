@@ -198,11 +198,22 @@ export class CookView extends TextFileView {
       }
     }
 
+    if(this.settings.showMetadata) {
+      const ul = this.previewEl.createEl('ul', { cls: 'metadata' });
+      recipe.metadata.forEach(metadata => {
+        //Add each metadata with a class 'metadata-${key}' to allow individual css styling
+        const li = ul.createEl('li', { cls: 'metadata-' + metadata.key });
+        li.createEl('span', { cls: 'metadata-label', text: metadata.key});
+        li.appendText(' ');
+        li.appendText(metadata.value);
+      })
+    }
+
     if(this.settings.showIngredientList) {
       // Add the Ingredients header
       this.previewEl.createEl('h2', { cls: 'ingredients-header', text: i18n('Ingredients') });
 
-      // Add the ingredients list
+      // Add the Ingredients list
       const ul = this.previewEl.createEl('ul', { cls: 'ingredients' });
       recipe.ingredients.forEach(ingredient => {
         const li = ul.createEl('li');

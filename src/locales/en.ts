@@ -29,6 +29,8 @@ export default {
   'Play a ticking sound while a timer is running': 'Play a ticking sound while a timer is running',
   'Alarm When Timers End': 'Alarm When Timers End',
   'Play a ring sound when a running timer finishes': 'Play a ring sound when a running timer finishes',
+  'Show Metadata': 'Show Metadata',
+  'Show the Metadata at the top of the recipe': 'Show the Metadata at the top of the recipe',
 
   //Headers
   'Ingredients': 'Ingredients',

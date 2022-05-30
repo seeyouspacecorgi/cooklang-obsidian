@@ -23,9 +23,24 @@
     max-height: calc(16vw);
   }
 
+  ul.metadata,
   ul.ingredients,
   ul.cookware {
     column-count: 2;
+  }
+
+  ul.metadata {
+    list-style-type: none;
+  }
+
+  li.metadata-description {
+    column-span: all;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  
+  li.metadata-description>span.metadata-label {
+    display: none;
   }
 
   ol.method {
@@ -92,7 +107,7 @@
     .resume-button,
     .stop-button {
       font-size: 0;
-      padding:6px;
+      padding: 6px;
     }
 
     .pause-button::before {

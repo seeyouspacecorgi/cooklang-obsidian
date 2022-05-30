@@ -17,6 +17,7 @@ export class CookLangSettings {
   showQuantitiesInline: boolean = false;
   timersTick: boolean = true;
   timersRing: boolean = true;
+  showMetadata: boolean = false;
 }
 
 export class CookSettingsTab extends PluginSettingTab {
@@ -130,6 +131,17 @@ export class CookSettingsTab extends PluginSettingTab {
         .setValue(this.plugin.settings.timersRing)
         .onChange((value: boolean) => {
           this.plugin.settings.timersRing = value;
+          this.plugin.saveData(this.plugin.settings);
+          this.plugin.reloadCookViews();
+        }));
+
+    new Setting(containerEl)
+      .setName(i18n('Show Metadata'))
+      .setDesc(i18n('Show the Metadata at the top of the recipe'))
+      .addToggle(toggle => toggle
+        .setValue(this.plugin.settings.showMetadata)
+        .onChange((value: boolean) => {
+          this.plugin.settings.showMetadata = value;
           this.plugin.saveData(this.plugin.settings);
           this.plugin.reloadCookViews();
         }));
