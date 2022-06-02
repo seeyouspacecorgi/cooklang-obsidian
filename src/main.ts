@@ -30,7 +30,7 @@ export default class CookPlugin extends Plugin {
 
     this.addCommand({
       id: "create-cook",
-      name: i18n("Create new recipe"),
+      name: i18n("action-create-recipe"),
       callback: async () => {
         const newFile = await this.cookFileCreator();
         this.app.workspace.getLeaf().openFile(newFile);
@@ -39,7 +39,7 @@ export default class CookPlugin extends Plugin {
 
     this.addCommand({
       id: "create-cook-new-pane",
-      name: i18n("Create recipe in new pane"),
+      name: i18n("action-create-recipe-in-new-pane"),
       callback: async () => {
         const newFile = await this.cookFileCreator();
         await this.app.workspace.getLeaf(true).openFile(newFile);
@@ -49,7 +49,7 @@ export default class CookPlugin extends Plugin {
     // register the convert to cook command
     this.addCommand({
       id: "convert-to-cook",
-      name: i18n("Convert markdown file to `.cook`"),
+      name: i18n("action-convert-md-to-cook"),
       checkCallback: (checking:boolean) => {
         const file = this.app.workspace.getActiveFile();
         const isMd = file.extension === "md";
@@ -83,10 +83,10 @@ export default class CookPlugin extends Plugin {
     else if(!newFileFolderPath.endsWith('/')) newFileFolderPath += '/';
 
     const originalPath = newFileFolderPath;
-    newFileFolderPath = `${newFileFolderPath}${i18n('Untitled')}.cook`;
+    newFileFolderPath = `${newFileFolderPath}${i18n('label-untitled-file')}.cook`;
     let i = 0;
     while(this.app.vault.getAbstractFileByPath(newFileFolderPath)) {
-      newFileFolderPath = `${originalPath}${i18n('Untitled')} ${++i}.cook`;
+      newFileFolderPath = `${originalPath}${i18n('label-untitled-file')} ${++i}.cook`;
     }
     const newFile = await this.app.vault.create(newFileFolderPath, '');
     return newFile;

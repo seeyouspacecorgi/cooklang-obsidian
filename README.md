@@ -10,6 +10,28 @@ A plugin for [Obsidian](https://obsidian.md) adding support for [CookLang](https
 - This plugin has been submitted community plugins repo. You can install it from Communinty Plugins within Obsidian.
 - You can build and install the plugin manually by checking out the files to `<your vault>/.obsidian/plugins/cooklang-obsidian` and running `npm install` and then `npm run build`.
 
+## Adding a translation
+To translate, [fork this repo](https://guides.github.com/activities/forking/) and find the `src/locales` folder.
+
+If the language you want to translate already exists in that folder, you can simply edit the values:
+original    =>  `'action-create-recipe': 'Create new recipe',`
+translated  =>  `'action-create-recipe': 'Créer une nouvelle recette',`
+
+In case the file does not exists, duplicate `en.ts` and rename it before editing. Then open `locale.ts`, import your language file and add it to the list of supported locales.
+
+```
+import en from './en';
+import fr from './fr';
+import [your-language] from './[your-language]';
+
+const locale = () => window.localStorage.getItem('language');
+const supported_locales: { [k: string]: Partial<typeof en> } = { en, fr, [your-language] };
+```
+
+Once you're done editing, [submit a pull request](https://guides.github.com/activities/forking/).
+
+For translation constistency with Obsidian and other plugins, check out the [official translation files](https://github.com/obsidianmd/obsidian-translations)
+
 ## Security
 > Third-party plugins can access files on your computer, connect to the internet, and even install additional programs.
 

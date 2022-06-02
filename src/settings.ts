@@ -33,12 +33,12 @@ export class CookSettingsTab extends PluginSettingTab {
     containerEl.empty();
 
     new Setting(containerEl)
-      .setName(i18n('Preview Options'))
+      .setName(i18n('section-preview'))
       .setHeading();
 
     new Setting(containerEl)
-      .setName(i18n('Show images'))
-      .setDesc(i18n('Show images in recipe'))
+      .setName(i18n('option-show-images'))
+      .setDesc(i18n('option-show-images-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.showImages)
         .onChange((value: boolean) => {
@@ -48,8 +48,19 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('Show ingredient list'))
-      .setDesc(i18n('Show the list of ingredients at the top of the recipe'))
+      .setName(i18n('option-show-metadata'))
+      .setDesc(i18n('option-show-metadata-description'))
+      .addToggle(toggle => toggle
+        .setValue(this.plugin.settings.showMetadata)
+        .onChange((value: boolean) => {
+          this.plugin.settings.showMetadata = value;
+          this.plugin.saveData(this.plugin.settings);
+          this.plugin.reloadCookViews();
+        }));
+
+    new Setting(containerEl)
+      .setName(i18n('option-show-ingredients'))
+      .setDesc(i18n('option-show-ingredients-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.showIngredientList)
         .onChange((value: boolean) => {
@@ -59,8 +70,8 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('Show cookware list'))
-      .setDesc(i18n('Show the list of cookware at the top of the recipe'))
+      .setName(i18n('option-show-cookware'))
+      .setDesc(i18n('option-show-cookware-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.showCookwareList)
         .onChange((value: boolean) => {
@@ -70,8 +81,8 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('Show quantities inline'))
-      .setDesc(i18n('Show the ingredient quantities inline in the recipe method'))
+      .setName(i18n('option-inline-quantities'))
+      .setDesc(i18n('option-inline-quantities-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.showQuantitiesInline)
         .onChange((value: boolean) => {
@@ -81,8 +92,8 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('Show timers list'))
-      .setDesc(i18n('Show the list of timers at the top of the recipe'))
+      .setName(i18n('option-show-timers'))
+      .setDesc(i18n('option-show-timers-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.showTimersList)
         .onChange((value: boolean) => {
@@ -92,8 +103,8 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('Inline interactive timers'))
-      .setDesc(i18n('Allow clicking on a time in a recipe method to start a timer'))
+      .setName(i18n('option-interactive-timers'))
+      .setDesc(i18n('option-interactive-timers-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.showTimersInline)
         .onChange((value: boolean) => {
@@ -103,8 +114,8 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('Show total time'))
-      .setDesc(i18n('Show the total of all timers at the top of the recipe'))
+      .setName(i18n('option-show-totaltime'))
+      .setDesc(i18n('option-show-totaltime-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.showTotalTime)
         .onChange((value: boolean) => {
@@ -114,8 +125,8 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('Running Timers Tick'))
-      .setDesc(i18n('Play a ticking sound while a timer is running'))
+      .setName(i18n('option-timer-sound'))
+      .setDesc(i18n('option-timer-sound-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.timersTick)
         .onChange((value: boolean) => {
@@ -125,23 +136,12 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('Alarm When Timers End'))
-      .setDesc(i18n('Play a ring sound when a running timer finishes'))
+      .setName(i18n('option-alarm-sound'))
+      .setDesc(i18n('option-alarm-sound-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.timersRing)
         .onChange((value: boolean) => {
           this.plugin.settings.timersRing = value;
-          this.plugin.saveData(this.plugin.settings);
-          this.plugin.reloadCookViews();
-        }));
-
-    new Setting(containerEl)
-      .setName(i18n('Show Metadata'))
-      .setDesc(i18n('Show the Metadata at the top of the recipe'))
-      .addToggle(toggle => toggle
-        .setValue(this.plugin.settings.showMetadata)
-        .onChange((value: boolean) => {
-          this.plugin.settings.showMetadata = value;
           this.plugin.saveData(this.plugin.settings);
           this.plugin.reloadCookViews();
         }));
