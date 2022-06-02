@@ -13,19 +13,19 @@ A plugin for [Obsidian](https://obsidian.md) adding support for [CookLang](https
 ## Adding a translation
 To translate, [fork this repo](https://guides.github.com/activities/forking/) and find the `src/locales` folder.
 
-If the language you want to translate already exists in that folder, you can simply edit the values:
-original    =>  `'action-create-recipe': 'Create new recipe',`
+If the language you want to translate already exists in that folder, you can simply edit the values:  
+original    =>  `'action-create-recipe': 'Create new recipe',`  
 translated  =>  `'action-create-recipe': 'Créer une nouvelle recette',`
 
-In case the file does not exists, duplicate `en.ts` and rename it before editing. Then open `locale.ts`, import your language file and add it to the list of supported locales.
+In case the file does not exists, duplicate `en.ts` and rename it before editing. Then open `locale.ts`, import your language file and add it to the list of supported locales:
 
 ```
 import en from './en';
 import fr from './fr';
-import [your-language] from './[your-language]';
+import <your-language> from './<your-language>';
 
 const locale = () => window.localStorage.getItem('language');
-const supported_locales: { [k: string]: Partial<typeof en> } = { en, fr, [your-language] };
+const supported_locales: { [k: string]: Partial<typeof en> } = { en, fr, <your-language> };
 ```
 
 Once you're done editing, [submit a pull request](https://guides.github.com/activities/forking/).
