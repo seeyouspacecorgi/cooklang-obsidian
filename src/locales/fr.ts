@@ -28,9 +28,9 @@ export default {
   'option-show-totaltime': 'Afficher la durée totale',
   'option-show-totaltime-description': 'Affiche la durée totale des minuteurs au-dessus de la recette',
   'option-timer-sound': 'Son du Minuteur',
-  'option-timer-sound-description': 'Joue un son lorsque le minuteur est actif'
+  'option-timer-sound-description': 'Joue un son lorsque le minuteur est actif',
   'option-alarm-sound': 'Sonnerie du Minuteur',
-  'option-alarm-sound-description': 'Sonne lorsque le minuteur est terminé'
+  'option-alarm-sound-description': 'Sonne lorsque le minuteur est terminé',
 
   // Headers (cookView.ts)
   'label-ingredients': 'Ingrédients',

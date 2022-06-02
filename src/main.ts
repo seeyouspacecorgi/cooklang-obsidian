@@ -52,7 +52,7 @@ export default class CookPlugin extends Plugin {
       name: i18n("action-convert-md-to-cook"),
       checkCallback: (checking:boolean) => {
         const file = this.app.workspace.getActiveFile();
-        const isMd = file.extension === "md";
+        const isMd = file && file.extension === "md";
         if(checking) {
           return isMd;
         }
