@@ -64,12 +64,12 @@ CodeMirror.defineMode("cook", function() {
 
         if(stream.match(/^@([^@#~]+?(?={))/))
           return "ingredient";
-        else if(stream.match(/^@(.+?\b)/))
+        else if(stream.match(/^@((?:[^@#~\s])+)/))
           return "ingredient";
         
         if(stream.match(/^#([^@#~]+?(?={))/))
           return "cookware";
-        else if(stream.match(/^#(.+?\b)/))
+        else if(stream.match(/^#((?:[^@#~\s])+)/))
           return "cookware";
 
         if(ch === '~'){
