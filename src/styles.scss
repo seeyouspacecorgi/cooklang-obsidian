@@ -50,12 +50,7 @@
     padding: 0;
   }
 
-  ol.method>li {
-    counter-increment: step-counter;
-  }
-
-  ol.method>li::before {
-    content: "Step " counter(step-counter);
+  span.step-label {
     font-weight: 600;
     display: block;
     font-size: 1.17em;

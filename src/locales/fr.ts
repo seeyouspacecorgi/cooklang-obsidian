@@ -38,5 +38,6 @@ export default {
   'label-timers': 'Minuteurs',
   'label-total-time': 'Durée totale',
   'label-method': 'Instructions',
+  'label-step': 'Étape {{count}}',
 
 }

@@ -38,5 +38,6 @@ export default {
   'label-timers': 'Timers',
   'label-total-time': 'Total Time',
   'label-method': 'Method',
+  'label-step': 'Step {{count}}',
 
 }

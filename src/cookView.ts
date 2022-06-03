@@ -287,8 +287,9 @@ export class CookView extends TextFileView {
 
     // Add the Method list
     const mol = this.previewEl.createEl('ol', { cls: 'method' });
-    recipe.steps.forEach(step => {
+    recipe.steps.forEach((step, i) => {
       const mli = mol.createEl('li');
+      mli.createSpan({ cls: 'step-label', text: i18n('label-step', { count: i + 1 }) });
       const mp = mli.createEl('p');
       step.line.forEach(s => {
         if (typeof s === "string") mp.append(s);
