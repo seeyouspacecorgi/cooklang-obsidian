@@ -1,9 +1,10 @@
 //Based on https://github.com/valentine195/obsidian-leaflet-plugin/blob/master/src/l10n/locale.ts
 import en from './en';
 import fr from './fr';
+import it from './it';
 
 const locale = () => window.localStorage.getItem('language');
-const supported_locales: { [k: string]: Partial<typeof en> } = { en, fr };
+const supported_locales: { [k: string]: Partial<typeof en> } = { en, fr, it };
 const user_locale = supported_locales[locale()];
 
 export default function i18n(str: keyof typeof en, inserts?: { [k: string]: string }): string {
