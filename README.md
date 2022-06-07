@@ -10,7 +10,8 @@ A plugin for [Obsidian](https://obsidian.md) adding support for [CookLang](https
 - This plugin has been submitted community plugins repo. You can install it from Communinty Plugins within Obsidian.
 - You can build and install the plugin manually by checking out the files to `<your vault>/.obsidian/plugins/cooklang-obsidian` and running `npm install` and then `npm run build`.
 
-## Adding a translation
+## Localization
+### How to add a translation
 To translate, [fork this repo](https://guides.github.com/activities/forking/) and find the `src/locales` folder.
 
 If the language you want to translate already exists in that folder, you can simply edit the values:  
@@ -30,7 +31,16 @@ const supported_locales: { [k: string]: Partial<typeof en> } = { en, fr, <your-l
 
 Once you're done editing, [submit a pull request](https://guides.github.com/activities/forking/).
 
-For translation constistency with Obsidian and other plugins, check out the [official translation files](https://github.com/obsidianmd/obsidian-translations)
+For translation consistency with Obsidian and other plugins, check out [obsidian-translations](https://github.com/obsidianmd/obsidian-translations)
+
+### List of translated languages
+
+| Language code | Language name | Native name           | Translation           
+| ------------- | ------------- | --------------------- | --------------------- 
+| `en`          | English       | English               | (original)            
+| `fr`          | French        | français              | [@seeyouspacecorgi](https://github.com/seeyouspacecorgi)
+| `it`          | Italian       | Italiano              | thanks [@savissimo](https://github.com/savissimo) !
+
 
 ## Security
 > Third-party plugins can access files on your computer, connect to the internet, and even install additional programs.
