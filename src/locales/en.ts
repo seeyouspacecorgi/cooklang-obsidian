@@ -1,9 +1,10 @@
 export default {
-  // Commands (main.ts)
+  // Commands & Context Menu (main.ts)
   'action-create-recipe': 'Create new recipe',
   'action-create-recipe-in-new-pane': 'Create recipe in new pane',
   'action-convert-md-to-cook': 'Convert markdown file to `.cook`',
   'label-untitled-file': 'Untitled',
+  'msg-file-already-exists': 'There\'s already a file with the same name',
 
   // Menu (cookView.ts)
   'preview': 'Preview (Ctrl/Cmd+Click to open in new pane)',
@@ -40,4 +41,8 @@ export default {
   'label-method': 'Method',
   'label-step': 'Step {{count}}',
 
+  // Timers (cookView.ts)
+  'msg-timer-done': 'Timer has finished!',
+  'msg-named-timer-done': '{{name}} timer has finished!',
+  
 }

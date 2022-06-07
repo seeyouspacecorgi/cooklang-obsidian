@@ -1,9 +1,10 @@
 export default {
-  // Commands (main.ts)
+  // Commands & Context Menu (main.ts)
   'action-create-recipe': 'Créer une nouvelle recette',
   'action-create-recipe-in-new-pane': 'Créer une recette dans un nouveau volet',
   'action-convert-md-to-cook': 'Convertir un fichier Markdown en `.cook`',
   'label-untitled-file': 'Sans Titre',
+  'msg-file-already-exists': 'Il y a déjà un fichier du même nom',
 
   // Menu (cookView.ts)
   'preview': 'Aperçu (Ctrl/Cmd+Clic pour ouvrir dans un nouveau volet)',
@@ -39,5 +40,9 @@ export default {
   'label-total-time': 'Durée totale',
   'label-method': 'Instructions',
   'label-step': 'Étape {{count}}',
+
+  // Timers (cookView.ts)
+  'msg-timer-done': 'Fin du minuteur!',
+  'msg-named-timer-done': 'Le minuteur {{name}} est terminé!',
 
 }

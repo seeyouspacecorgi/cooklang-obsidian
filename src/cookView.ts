@@ -386,7 +386,7 @@ export class CookView extends TextFileView {
     const now = new Date()
     const time = (end.getTime() - now.getTime()) / 1000
     if (time <= 0) {
-      new Notice(name ? `${name} timer has finished!` : `Timer has finished!`);
+      new Notice(name ? i18n('msg-named-timer-done', { name }) : i18n('msg-timer-done'));
       if (this.settings.timersRing) this.alarmAudio?.play()
       stop()
     }
