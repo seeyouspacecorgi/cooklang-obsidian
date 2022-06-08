@@ -1,7 +1,7 @@
 import { Cookware, Ingredient, Recipe, Timer } from 'cooklang'
 import { TextFileView, setIcon, TFile, Keymap, WorkspaceLeaf, ViewStateResult, Notice } from 'obsidian'
 import { CookLangSettings } from './settings';
-import i18n from './locales/locales';
+import i18n, { i18n_units } from './locales/locales';
 import { Howl } from 'howler';
 import alarmMp3 from './alarm.mp3';
 import timerMp3 from './timer.mp3';
@@ -112,6 +112,9 @@ export class CookView extends TextFileView {
     this.data = this.editor.getValue();
     // may as well parse the recipe while we're here.
     this.recipe = new Recipe(this.data);
+    // fix localized time units incorrectly parsed
+    this.recipe.timers.forEach(timer => timer.seconds = this.getSeconds(timer.amount, timer.units));
+
     return this.data;
   }
 
@@ -334,7 +337,6 @@ export class CookView extends TextFileView {
     });
   }
 
-  
 
   makeTimer(el: Element, seconds: number, name: string) {
     if (el.nextElementSibling && el.nextElementSibling.hasClass('countdown')) {
@@ -422,5 +424,21 @@ export class CookView extends TextFileView {
     if (minutes > 0 && seconds >= 0 && seconds < 10) result += "0";
     if ( seconds >= 0) result += seconds;
     return result;
+  }
+
+  getSeconds(amount: int, units = 'minutes') {
+    console.log(i18n_units(units))
+    switch (i18n_units(units)) {
+      case 'seconds':
+        return amount
+      case 'minutes':
+        return amount * 60
+      case 'hours':
+        return amount * 60 * 60
+      case 'days':
+        return amount * 60 * 60 * 24
+      default:
+        return amount;
+    }
   }
 }
