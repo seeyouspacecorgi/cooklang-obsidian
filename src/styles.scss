@@ -33,12 +33,31 @@
     list-style-type: none;
   }
 
+  span.metadata-label {
+    font-weight: 600;
+  }
+
+  span.metadata-label::after {
+    content: ':';
+  }
+
+  li.metadata-title {
+    column-span: all;
+    font-size: var(--h1);
+    font-weight: 800;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
   li.metadata-description {
     column-span: all;
     color: var(--text-muted);
     font-style: italic;
+    margin-top: 15px;
+    margin-bottom: 8px;
   }
-  
+
+  li.metadata-title>span.metadata-label,
   li.metadata-description>span.metadata-label {
     display: none;
   }
@@ -60,7 +79,7 @@
     margin-inline-end: 0px;
   }
 
-  span.time,
+  span.timer,
   span.ingredient,
   span.cookware {
     font-weight: 600;
@@ -92,7 +111,9 @@
   }
 
   .countdown {
-    margin-left:12px;
+    margin-inline-start: 12px;
+    margin-inline-end: 6px;
+    white-space: nowrap;
 
     .resume-button + button + span {
       color: var(--text-faint);

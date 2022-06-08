@@ -198,19 +198,20 @@ export class CookView extends TextFileView {
       }
     }
 
-    if(this.settings.showMetadata) {
+    if(this.settings.showMetadata && recipe.metadata.length) {
       // Add the Metadata
       const ul = this.previewEl.createEl('ul', { cls: 'metadata' });
       recipe.metadata.forEach(metadata => {
         // Add each metadata with a class 'metadata-${key}' to allow individual css styling
-        const li = ul.createEl('li', { cls: 'metadata-' + metadata.key });
-        li.createEl('span', { cls: 'metadata-label', text: metadata.key});
+        metadata.escaped_key = metadata.key.replace(/[!"'`^#$%&@?~*+=,.:;<>(){}[\]/|\\]/g, '').replace(/\s/g,'-');
+        const li = ul.createEl('li', { cls: 'metadata-' + metadata.escaped_key });
+        li.createSpan({ cls: 'metadata-label', text: metadata.key });
         li.appendText(' ');
         li.appendText(metadata.value);
       })
     }
 
-    if(this.settings.showIngredientList) {
+    if(this.settings.showIngredientList && recipe.ingredients.length) {
       // Add the Ingredients header
       this.previewEl.createEl('h2', { cls: 'ingredients-header', text: i18n('label-ingredients') });
 
@@ -231,7 +232,7 @@ export class CookView extends TextFileView {
       })
     }
 
-    if(this.settings.showCookwareList) {
+    if(this.settings.showCookwareList && recipe.cookware.length) {
       // Add the Cookware header
       this.previewEl.createEl('h2', { cls: 'cookware-header', text: i18n('label-cookware') });
 
@@ -242,7 +243,7 @@ export class CookView extends TextFileView {
       })
     }
 
-    if (this.settings.showTimersList) {
+    if (this.settings.showTimersList && recipe.timers.length) {
       // Add the Timer header
       this.previewEl.createEl('h2', { cls: 'timers-header', text: i18n('label-timers') });
 
@@ -273,7 +274,7 @@ export class CookView extends TextFileView {
       })
     }
 
-    if(this.settings.showTotalTime) {
+    if(this.settings.showTotalTime && recipe.timers.length) {
       let time = recipe.calculateTotalTime();
       if(time > 0) {
         // Add the Timers header
@@ -334,7 +335,7 @@ export class CookView extends TextFileView {
     });
   }
 
-  
+
 
   makeTimer(el: Element, seconds: number, name: string) {
     if (el.nextElementSibling && el.nextElementSibling.hasClass('countdown')) {
