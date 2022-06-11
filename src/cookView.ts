@@ -129,6 +129,8 @@ export class CookView extends TextFileView {
 
     this.editor.setValue(data);
     this.recipe = new Recipe(data);
+    // fix localized time units incorrectly parsed
+    this.recipe.timers.forEach(timer => timer.seconds = this.getSeconds(timer.amount, timer.units));
     // if we're in preview view, also render that
     if (this.currentView === 'preview') this.renderPreview(this.recipe);
   }
