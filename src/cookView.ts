@@ -1,7 +1,7 @@
 import { Cookware, Ingredient, Recipe, Timer } from 'cooklang'
 import { TextFileView, setIcon, TFile, Keymap, WorkspaceLeaf, ViewStateResult, Notice } from 'obsidian'
 import { CookLangSettings } from './settings';
-import i18n, { i18n_units } from './locales/locales';
+import I18n from './locales/locales';
 import { Howl } from 'howler';
 import alarmMp3 from './alarm.mp3';
 import timerMp3 from './timer.mp3';
@@ -15,12 +15,14 @@ export class CookView extends TextFileView {
   recipe: Recipe;
   changeModeButton: HTMLElement;
   currentView: 'source' | 'preview';
+  i18n: I18n;
   alarmAudio: Howl;
   timerAudio: Howl;
 
   constructor(leaf: WorkspaceLeaf, settings: CookLangSettings) {
     super(leaf);
     this.settings = settings;
+    this.i18n = new I18n();
 
     this.alarmAudio = new Howl({ src: [alarmMp3], loop: false, preload: true });
     this.timerAudio = new Howl({ src: [timerMp3], loop: true, preload: true });
@@ -45,7 +47,7 @@ export class CookView extends TextFileView {
     });
 
     // add the action to switch between source and preview mode
-    this.changeModeButton = this.addAction('lines-of-text', i18n('preview'), (evt) => this.switchMode(evt), 17);
+    this.changeModeButton = this.addAction('lines-of-text', this.i18n.translate('preview'), (evt) => this.switchMode(evt), 17);
 
     // undocumented: Get the current default view mode to switch to
     let defaultViewMode = (this.app.vault as any).getConfig('defaultViewMode');
@@ -88,7 +90,7 @@ export class CookView extends TextFileView {
       if (mode === 'preview') {
         this.currentView = 'preview';
         setIcon(this.changeModeButton, 'pencil');
-        this.changeModeButton.setAttribute('aria-label', i18n('edit-view'));
+        this.changeModeButton.setAttribute('aria-label', this.i18n.translate('edit-view'));
 
         this.renderPreview(this.recipe);
         this.previewEl.style.setProperty('display', 'block');
@@ -98,7 +100,7 @@ export class CookView extends TextFileView {
       else {
         this.currentView = 'source';
         setIcon(this.changeModeButton, 'lines-of-text');
-        this.changeModeButton.setAttribute('aria-label', i18n('preview'));
+        this.changeModeButton.setAttribute('aria-label', this.i18n.translate('preview'));
 
         this.previewEl.style.setProperty('display', 'none');
         this.sourceEl.style.setProperty('display', 'block');
@@ -114,7 +116,6 @@ export class CookView extends TextFileView {
     this.recipe = new Recipe(this.data);
     // fix localized time units incorrectly parsed
     this.recipe.timers.forEach(timer => timer.seconds = this.getSeconds(timer.amount, timer.units));
-
     return this.data;
   }
 
@@ -217,7 +218,7 @@ export class CookView extends TextFileView {
 
     if(this.settings.showIngredientList) {
       // Add the Ingredients header
-      this.previewEl.createEl('h2', { cls: 'ingredients-header', text: i18n('label-ingredients') });
+      this.previewEl.createEl('h2', { cls: 'ingredients-header', text: this.i18n.translate('label-ingredients') });
 
       // Add the Ingredients list
       const ul = this.previewEl.createEl('ul', { cls: 'ingredients' });
@@ -238,7 +239,7 @@ export class CookView extends TextFileView {
 
     if(this.settings.showCookwareList) {
       // Add the Cookware header
-      this.previewEl.createEl('h2', { cls: 'cookware-header', text: i18n('label-cookware') });
+      this.previewEl.createEl('h2', { cls: 'cookware-header', text: this.i18n.translate('label-cookware') });
 
       // Add the Cookware list
       const ul = this.previewEl.createEl('ul', { cls: 'cookware' });
@@ -249,7 +250,7 @@ export class CookView extends TextFileView {
 
     if (this.settings.showTimersList) {
       // Add the Timer header
-      this.previewEl.createEl('h2', { cls: 'timers-header', text: i18n('label-timers') });
+      this.previewEl.createEl('h2', { cls: 'timers-header', text: this.i18n.translate('label-timers') });
 
       // Add the Timer list
       const ul = this.previewEl.createEl('ul', { cls: 'timers' });
@@ -282,19 +283,19 @@ export class CookView extends TextFileView {
       let time = recipe.calculateTotalTime();
       if(time > 0) {
         // Add the Timers header
-        this.previewEl.createEl('h2', { cls: 'time-header', text: i18n('label-total-time') });
+        this.previewEl.createEl('h2', { cls: 'time-header', text: this.i18n.translate('label-total-time') });
         this.previewEl.createEl('p', { cls: 'time', text: this.formatTime(time) });
       }
     }
 
     // Add the Method header
-    this.previewEl.createEl('h2', { cls: 'method-header', text: i18n('label-method') });
+    this.previewEl.createEl('h2', { cls: 'method-header', text: this.i18n.translate('label-method') });
 
     // Add the Method list
     const mol = this.previewEl.createEl('ol', { cls: 'method' });
     recipe.steps.forEach((step, i) => {
       const mli = mol.createEl('li');
-      mli.createSpan({ cls: 'step-label', text: i18n('label-step', { count: i + 1 }) });
+      mli.createSpan({ cls: 'step-label', text: this.i18n.translate('label-step', { count: i + 1 }) });
       const mp = mli.createEl('p');
       step.line.forEach(s => {
         if (typeof s === "string") mp.append(s);
@@ -390,7 +391,7 @@ export class CookView extends TextFileView {
     const now = new Date()
     const time = (end.getTime() - now.getTime()) / 1000
     if (time <= 0) {
-      new Notice(name ? i18n('msg-named-timer-done', { name }) : i18n('msg-timer-done'));
+      new Notice(name ? this.i18n.translate('msg-named-timer-done', { name }) : this.i18n.translate('msg-timer-done'));
       if (this.settings.timersRing) this.alarmAudio?.play()
       stop()
     }
@@ -429,8 +430,7 @@ export class CookView extends TextFileView {
   }
 
   getSeconds(amount: int, units = 'minutes') {
-    console.log(i18n_units(units))
-    switch (i18n_units(units)) {
+    switch (this.i18n.units(units)) {
       case 'seconds':
         return amount
       case 'minutes':

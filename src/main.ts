@@ -4,15 +4,17 @@ import './lib/codemirror';
 import './mode/cook/cook';
 import { CookView } from './cookView';
 import { CookLangSettings, CookSettingsTab } from './settings';
-import i18n from './locales/locales';
+import I18n from './locales/locales';
 
 export default class CookPlugin extends Plugin {
 
   settings: CookLangSettings;
+  i18n: I18n;
 
   async onload() {
     super.onload();
     this.settings = Object.assign(new CookLangSettings(), await this.loadData());
+    this.i18n = new I18n();
 
     // register a custom icon
     this.addDocumentIcon("cook");
@@ -30,7 +32,7 @@ export default class CookPlugin extends Plugin {
 
     this.addCommand({
       id: "create-cook",
-      name: i18n("action-create-recipe"),
+      name: this.i18n.translate("action-create-recipe"),
       callback: async () => {
         const newFile = await this.cookFileCreator();
         this.app.workspace.getLeaf().openFile(newFile);
@@ -39,7 +41,7 @@ export default class CookPlugin extends Plugin {
 
     this.addCommand({
       id: "create-cook-new-pane",
-      name: i18n("action-create-recipe-in-new-pane"),
+      name: this.i18n.translate("action-create-recipe-in-new-pane"),
       callback: async () => {
         const newFile = await this.cookFileCreator();
         await this.app.workspace.getLeaf(true).openFile(newFile);
@@ -49,7 +51,7 @@ export default class CookPlugin extends Plugin {
     // register the convert to cook command
     this.addCommand({
       id: "convert-to-cook",
-      name: i18n("action-convert-md-to-cook"),
+      name: this.i18n.translate("action-convert-md-to-cook"),
       checkCallback: (checking:boolean) => {
         const file = this.app.workspace.getActiveFile();
         const isMd = file && file.extension === "md";
@@ -83,10 +85,10 @@ export default class CookPlugin extends Plugin {
     else if(!newFileFolderPath.endsWith('/')) newFileFolderPath += '/';
 
     const originalPath = newFileFolderPath;
-    newFileFolderPath = `${newFileFolderPath}${i18n('label-untitled-file')}.cook`;
+    newFileFolderPath = `${newFileFolderPath}${this.i18n.translate('label-untitled-file')}.cook`;
     let i = 0;
     while(this.app.vault.getAbstractFileByPath(newFileFolderPath)) {
-      newFileFolderPath = `${originalPath}${i18n('label-untitled-file')} ${++i}.cook`;
+      newFileFolderPath = `${originalPath}${this.i18n.translate('label-untitled-file')} ${++i}.cook`;
     }
     const newFile = await this.app.vault.create(newFileFolderPath, '');
     return newFile;
