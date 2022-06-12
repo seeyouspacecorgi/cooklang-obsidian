@@ -1,44 +1,44 @@
 export default {
   'de': {
-    seconds: ['Sekunde', 'Sekunden'],
-    minutes: ['Minute', 'Minuten'],
-    hours: ['Stunde', 'Stunden'],
-    days: ['Tag', 'Tage']
+    seconds: /Sekunde(?:n)?/,
+    minutes: /Minute(?:n)?/,
+    hours: /Stunde(?:n)?/,
+    days: /Tage(?:e)?/
   },
   'en': {
-    seconds: ['second', 'seconds'],
-    minutes: ['minute', 'minutes'],
-    hours: ['hour', 'hours'],
-    days: ['day', 'days']
+    seconds: /second(?:s)?/,
+    minutes: /minute(?:s)?/,
+    hours: /hour(?:s)?/,
+    days: /day(?:s)?/
   },
   'es': {
-    seconds: ['segundo', 'segundos'],
-    minutes: ['minuto', 'minutos'],
-    hours: ['hora', 'horas'],
-    days: ['día', 'días']
+    seconds: /segundo(?:s)?/,
+    minutes: /minuto(?:s)?/,
+    hours: /hora(?:s)?/,
+    days: /día(?:s)?/
   },
   'fr': {
-    seconds: ['seconde','secondes'],
-    minutes: ['minute', 'minutes'],
-    hours: ['heure', 'heures'],
-    days: ['jour', 'jours']
+    seconds: /seconde(?:s)?/,
+    minutes: /minute(?:s)?/,
+    hours: /heure(?:s)?/,
+    days: /jour(?:s)?/
   },
   'it': {
-    seconds: ['secondo','secondi'],
-    minutes: ['minuto', 'minuti'],
-    hours: ['ora', 'ore'],
-    days: ['giorno', 'giorni']
+    seconds: /second[oi]/,
+    minutes: /minut[oi]/,
+    hours: /or[ae]/,
+    days: /giorn[oi]/
   },
   'nl': {
-    seconds: ['seconde','seconden'],
-    minutes: ['minuut', 'minuten'],
-    hours: ['uur'],
-    days: ['dag', 'dagen']
+    seconds: /seconde(?:n)?/,
+    minutes: /minuut|minuten/,
+    hours: /uur/,
+    days: /dag(?:en)?/
   },
   'pt': {
-    seconds: ['segundo', 'segundos'],
-    minutes: ['minuto', 'minutos'],
-    hours: ['hora', 'horas'],
-    days: ['dia', 'dias']
+    seconds: /segundo(?:s)?/,
+    minutes: /minuto(?:s)?/,
+    hours: /hora(?:s)?/,
+    days: /dia(?:s)?/
   },
 }

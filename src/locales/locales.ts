@@ -23,8 +23,8 @@ export default class I18n {
 		let translation = this.locale?.[str] ?? en?.[str] ?? `String missing: ${str}`;
 		// Replace placeholders with values
 		if (inserts) {
-			for (const [key, value] of Object.entries(inserts)) {
-		  	translation = translation.replace(`{{${key}}}`, value);
+			for (const key in inserts) {
+		  	translation = translation.replace(`{{${key}}}`, inserts[key]);
 			}
 		}
 		return translation;
@@ -33,16 +33,18 @@ export default class I18n {
 	// Translate localized units into english
 	units(unit: string): string {
 		// Try to find a matching unit using the locale
-		let strd_unit = Object.entries(units[this.user_locale]||{})?.find(([key, value]) => value.includes(unit))?.[0];
-		if (strd_unit) return strd_unit;
-		// Fallback to browse units across all languages
-		return Object.entries(supported_units)?.find(([key, value]) => value.includes(unit))?.[0];
+		const locale_units = units[this.user_locale];
+		if (locale_units) {
+			for (const key in locale_units) {
+				if (locale_units[key].test(unit)) return key;
+			}
+		}
+		// Try to find a matching unit in any language
+		for (const lang in units) {
+			for (const key in units[lang]) {
+				if (units[lang][key].test(unit)) return key;
+			}
+		}
+		return "";
 	}
 }
-
-const supported_units = Object.values(units).reduce((res, obj) => {
-	for (const key in obj) {
-		res[key] = [...new Set([...(res[key]||[]), ...obj[key]])];
-	}
-	return res;
-}, {});
