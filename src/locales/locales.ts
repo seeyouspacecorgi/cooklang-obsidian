@@ -3,18 +3,21 @@ import en from './en';
 import fr from './fr';
 import it from './it';
 
-const app_locale = () => window.localStorage.getItem('language');
 const supported_locales: { [key: string]: Partial<typeof en> } = { en, fr, it };
 
 export default class I18n {
-	user_locale: string;
+	locale_key: string;
 	locale: Partial<typeof en>;
 
-	constructor(user_locale?: string) {
-		// if no locale is given to the constructor, default to app locale
-		this.user_locale = user_locale || app_locale();
+	constructor() {
+		this.setLocale();
+	}
+
+	setLocale(str?: string) {
+		// if no argument, will reset to app locale
+		this.locale_key = str ?? window.localStorage.getItem('language');
 		// if the locale isn't supported, use english
-		this.locale = supported_locales[this.user_locale] || en;
+		this.locale = supported_locales[this.locale_key] || en;
 	}
 
 	// Main localization function
@@ -31,9 +34,9 @@ export default class I18n {
 	}
 
 	// Translate localized units into english
-	units(unit: string): string {
+	getUnit(unit: string): string {
 		// Try to find a matching unit using the locale
-		const locale_units = units[this.user_locale];
+		const locale_units = units[this.locale_key];
 		if (locale_units) {
 			for (const key in locale_units) {
 				if (locale_units[key].test(unit)) return key;

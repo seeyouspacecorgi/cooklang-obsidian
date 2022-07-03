@@ -59,7 +59,6 @@ export class CookView extends TextFileView {
   }
 
   setState(state: any, result: ViewStateResult): Promise<void>{
-    // console.log(state);
     return super.setState(state, result).then(() => {
       if (state.mode) this.switchMode(state.mode);
     });
@@ -116,6 +115,10 @@ export class CookView extends TextFileView {
     this.recipe = new Recipe(this.data);
     // fix localized time units incorrectly parsed
     this.recipe.timers.forEach(timer => timer.seconds = this.getSeconds(timer.amount, timer.units));
+    // get language from metadata
+    let lang = this.recipe.metadata.find(x => x.key === 'language')?.value;
+    this.i18n.setLocale(lang);
+    
     return this.data;
   }
 
@@ -132,6 +135,10 @@ export class CookView extends TextFileView {
     this.recipe = new Recipe(data);
     // fix localized time units incorrectly parsed
     this.recipe.timers.forEach(timer => timer.seconds = this.getSeconds(timer.amount, timer.units));
+    // get language from metadata
+    let lang = this.recipe.metadata.find(x => x.key === 'language')?.value;
+    this.i18n.setLocale(lang);
+
     // if we're in preview view, also render that
     if (this.currentView === 'preview') this.renderPreview(this.recipe);
   }
@@ -429,8 +436,8 @@ export class CookView extends TextFileView {
     return result;
   }
 
-  getSeconds(amount: int, units = 'minutes') {
-    switch (this.i18n.units(units)) {
+  getSeconds(amount: number, units = 'minutes') {
+    switch (this.i18n.getUnit(units)) {
       case 'seconds':
         return amount
       case 'minutes':
@@ -440,7 +447,7 @@ export class CookView extends TextFileView {
       case 'days':
         return amount * 60 * 60 * 24
       default:
-        return amount;
+        return 0;
     }
   }
 }

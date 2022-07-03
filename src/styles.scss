@@ -33,6 +33,10 @@
     list-style-type: none;
   }
 
+  li.metadata-language {
+    display: none;
+  }
+
   li.metadata-description {
     column-span: all;
     color: var(--text-muted);
