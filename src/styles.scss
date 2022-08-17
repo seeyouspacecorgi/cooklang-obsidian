@@ -33,32 +33,7 @@
     list-style-type: none;
   }
 
-  span.metadata-label {
-    font-weight: 600;
-  }
-
-  span.metadata-label::after {
-    content: ':';
-  }
-
-  li.metadata-title {
-    column-span: all;
-    font-size: var(--h1);
-    font-weight: 800;
-    margin-top: 15px;
-    margin-bottom: 15px;
-  }
-
-  li.metadata-description {
-    column-span: all;
-    color: var(--text-muted);
-    font-style: italic;
-    margin-top: 15px;
-    margin-bottom: 8px;
-  }
-
-  li.metadata-title>span.metadata-label,
-  li.metadata-description>span.metadata-label {
+  li.metadata-language {
     display: none;
   }
 

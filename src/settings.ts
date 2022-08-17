@@ -1,6 +1,5 @@
 import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
 import { CookView } from './cookView';
-import i18n from './locales/locales';
 
 declare class CookPlugin extends Plugin {
   settings: CookLangSettings;
@@ -33,12 +32,12 @@ export class CookSettingsTab extends PluginSettingTab {
     containerEl.empty();
 
     new Setting(containerEl)
-      .setName(i18n('section-preview'))
+      .setName(this.plugin.i18n.translate('section-preview'))
       .setHeading();
 
     new Setting(containerEl)
-      .setName(i18n('option-show-images'))
-      .setDesc(i18n('option-show-images-description'))
+      .setName(this.plugin.i18n.translate('option-show-images'))
+      .setDesc(this.plugin.i18n.translate('option-show-images-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.showImages)
         .onChange((value: boolean) => {
@@ -48,8 +47,8 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('option-show-metadata'))
-      .setDesc(i18n('option-show-metadata-description'))
+      .setName(this.plugin.i18n.translate('option-show-metadata'))
+      .setDesc(this.plugin.i18n.translate('option-show-metadata-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.showMetadata)
         .onChange((value: boolean) => {
@@ -59,8 +58,8 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('option-show-ingredients'))
-      .setDesc(i18n('option-show-ingredients-description'))
+      .setName(this.plugin.i18n.translate('option-show-ingredients'))
+      .setDesc(this.plugin.i18n.translate('option-show-ingredients-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.showIngredientList)
         .onChange((value: boolean) => {
@@ -70,8 +69,8 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('option-show-cookware'))
-      .setDesc(i18n('option-show-cookware-description'))
+      .setName(this.plugin.i18n.translate('option-show-cookware'))
+      .setDesc(this.plugin.i18n.translate('option-show-cookware-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.showCookwareList)
         .onChange((value: boolean) => {
@@ -81,8 +80,8 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('option-inline-quantities'))
-      .setDesc(i18n('option-inline-quantities-description'))
+      .setName(this.plugin.i18n.translate('option-inline-quantities'))
+      .setDesc(this.plugin.i18n.translate('option-inline-quantities-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.showQuantitiesInline)
         .onChange((value: boolean) => {
@@ -92,8 +91,8 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('option-show-timers'))
-      .setDesc(i18n('option-show-timers-description'))
+      .setName(this.plugin.i18n.translate('option-show-timers'))
+      .setDesc(this.plugin.i18n.translate('option-show-timers-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.showTimersList)
         .onChange((value: boolean) => {
@@ -103,8 +102,8 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('option-interactive-timers'))
-      .setDesc(i18n('option-interactive-timers-description'))
+      .setName(this.plugin.i18n.translate('option-interactive-timers'))
+      .setDesc(this.plugin.i18n.translate('option-interactive-timers-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.showTimersInline)
         .onChange((value: boolean) => {
@@ -114,8 +113,8 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('option-show-totaltime'))
-      .setDesc(i18n('option-show-totaltime-description'))
+      .setName(this.plugin.i18n.translate('option-show-totaltime'))
+      .setDesc(this.plugin.i18n.translate('option-show-totaltime-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.showTotalTime)
         .onChange((value: boolean) => {
@@ -125,8 +124,8 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('option-timer-sound'))
-      .setDesc(i18n('option-timer-sound-description'))
+      .setName(this.plugin.i18n.translate('option-timer-sound'))
+      .setDesc(this.plugin.i18n.translate('option-timer-sound-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.timersTick)
         .onChange((value: boolean) => {
@@ -136,8 +135,8 @@ export class CookSettingsTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName(i18n('option-alarm-sound'))
-      .setDesc(i18n('option-alarm-sound-description'))
+      .setName(this.plugin.i18n.translate('option-alarm-sound'))
+      .setDesc(this.plugin.i18n.translate('option-alarm-sound-description'))
       .addToggle(toggle => toggle
         .setValue(this.plugin.settings.timersRing)
         .onChange((value: boolean) => {
