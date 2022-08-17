@@ -114,7 +114,7 @@ export class CookView extends TextFileView {
     // may as well parse the recipe while we're here.
     this.recipe = new Recipe(this.data);
     // fix localized time units incorrectly parsed
-    this.recipe.timers.forEach(timer => timer.seconds = this.getSeconds(timer.amount, timer.units));
+    this.recipe.timers.forEach(timer => timer.seconds = this.getSeconds(timer.quantity, timer.units));
     // get language from metadata
     let lang = this.recipe.metadata.find(x => x.key === 'language')?.value;
     this.i18n.setLocale(lang);
@@ -291,7 +291,7 @@ export class CookView extends TextFileView {
       if(time > 0) {
         // Add the Timers header
         this.previewEl.createEl('h2', { cls: 'time-header', text: this.i18n.translate('label-total-time') });
-        this.previewEl.createEl('p', { cls: 'time', text: this.formatTime(time) });
+        this.previewEl.createEl('p', { cls: 'time', text: this.i18n.formatTime(time) });
       }
     }
 
@@ -406,19 +406,6 @@ export class CookView extends TextFileView {
     el.setAttr('data-percent', Math.floor((time / totalSeconds) * 100))
   }
 
-  formatTime(time: number, showSeconds:boolean = false) {
-    let seconds = Math.floor(time % 60);
-    let minutes = Math.floor(time / 60);
-    let hours = Math.floor(minutes / 60);
-    minutes = minutes % 60;
-
-    let result = "";
-    if (hours > 0) result += hours + " hours ";
-    if (minutes > 0) result += minutes + " minutes ";
-    if (showSeconds && seconds > 0) result += seconds + " seconds ";
-    return result;
-  }
-
   formatTimeForTimer(time: number) {
     let seconds = Math.floor(time % 60);
     let minutes = Math.floor(time / 60);
@@ -436,16 +423,17 @@ export class CookView extends TextFileView {
     return result;
   }
 
-  getSeconds(amount: number, units = 'minutes') {
-    switch (this.i18n.getUnit(units)) {
+  //This is a workaround, ideally it would be part of the cooklang module
+  getSeconds(quantity: number, units = 'minutes') {
+    switch (this.i18n.normalizeUnits(units)) {
       case 'seconds':
-        return amount
+        return quantity
       case 'minutes':
-        return amount * 60
+        return quantity * 60
       case 'hours':
-        return amount * 60 * 60
+        return quantity * 60 * 60
       case 'days':
-        return amount * 60 * 60 * 24
+        return quantity * 60 * 60 * 24
       default:
         return 0;
     }
