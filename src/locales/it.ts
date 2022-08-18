@@ -4,6 +4,7 @@ export default {
   'action-create-recipe-in-new-pane': 'Crea ricetta in un nuovo pannello',
   'action-convert-md-to-cook': 'Converti il file markdown in `.cook`',
   'label-untitled-file': 'Senza titolo',
+  //'msg-file-already-exists': 'There\'s already a file with the same name',
 
   // Menu (cookView.ts)
   'preview': 'Anteprima (Ctrl/Cmd+Click per aprire in un nuovo pannello)',
@@ -40,4 +41,8 @@ export default {
   'label-method': 'Passaggi',
   'label-step': 'Passaggio {{count}}',
 
-}
+    // Timers (cookView.ts)
+    //'msg-timer-done': 'Timer has finished!',
+    //'msg-named-timer-done': '{{name}} timer has finished!',
+
+  }

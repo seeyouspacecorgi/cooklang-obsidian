@@ -134,7 +134,7 @@ export class CookView extends TextFileView {
     this.editor.setValue(data);
     this.recipe = new Recipe(data);
     // fix localized time units incorrectly parsed
-    this.recipe.timers.forEach(timer => timer.seconds = this.getSeconds(timer.amount, timer.units));
+    this.recipe.timers.forEach(timer => timer.seconds = this.getSeconds(timer.quantity, timer.units));
     // get language from metadata
     let lang = this.recipe.metadata.find(x => x.key === 'language')?.value;
     this.i18n.setLocale(lang);
