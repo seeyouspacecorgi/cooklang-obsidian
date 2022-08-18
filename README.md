@@ -25,7 +25,6 @@ import en from './en';
 import fr from './fr';
 import <your-language> from './<your-language>';
 
-const locale = () => window.localStorage.getItem('language');
 const supported_locales: { [k: string]: Partial<typeof en> } = { en, fr, <your-language> };
 ```
 
@@ -41,6 +40,9 @@ For translation consistency with Obsidian and other plugins, check out [obsidian
 | `fr`          | French        | français              | [@seeyouspacecorgi](https://github.com/seeyouspacecorgi)
 | `it`          | Italian       | Italiano              | thanks [@savissimo](https://github.com/savissimo) !
 
+### Multi-language cookbooks
+By default the plugin will use the same language as Obsidian. 
+The language for individual files can be set using metadatas : `>> language: en`  
 
 ## Security
 > Third-party plugins can access files on your computer, connect to the internet, and even install additional programs.
