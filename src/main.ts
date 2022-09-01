@@ -1,5 +1,5 @@
 import './styles.scss';
-import { Plugin, WorkspaceLeaf, addIcon } from 'obsidian';
+import { Plugin, WorkspaceLeaf, TFolder, addIcon } from 'obsidian';
 import './lib/codemirror';
 import './mode/cook/cook';
 import { CookView } from './cookView';
@@ -60,34 +60,66 @@ export default class CookPlugin extends Plugin {
         }
         else if(isMd) {
           // replace last instance of .md with .cook
-          this.app.vault.rename(file,file.path.replace(/\.md$/, ".cook")).then(() => {
+          this.app.vault.rename(file, file.path.replace(/\.md$/, ".cook")).then(() => {
             this.app.workspace.activeLeaf.openFile(file);
-          });
+          }).catch(() => new Notice(this.i18n.translate("msg-file-already-exists")));
         }
       }
     })
+
+    // context menu:
+    // - Create new recipe
+    // - Convert markdown file to `.cook`
+
+    this.registerEvent(
+      this.app.workspace.on("file-menu", (menu, file) => {
+        // option only shows on folders
+        if(file instanceof TFolder) {
+          menu.addItem((item) => {
+            item.setTitle(this.i18n.translate("action-create-recipe"))
+                .setIcon("document-cook")
+                .onClick(async () => {
+                  const newFile = await this.cookFileCreator(file.path);
+                  this.app.workspace.getLeaf().openFile(newFile);
+              })
+          })
+        }
+        // option only shows on markdown files
+        if(file.extension === "md") {
+          menu.addItem((item) => {
+             item.setTitle(this.i18n.translate("action-convert-md-to-cook"))
+                 .setIcon("document-cook")
+                 .onClick(() => {
+                   this.app.vault.rename(file, file.path.replace(/\.md$/, ".cook")).then(() => {
+                     this.app.workspace.getLeaf().openFile(file);
+                   }).catch(() => new Notice(this.i18n.translate("msg-file-already-exists")));
+               })
+           })
+        }
+      })
+    )
   }
 
-  cookFileCreator = async () => {
-    let newFileFolderPath = null;
-    const newFileLocation = (this.app.vault as any).getConfig('newFileLocation');
-    if(!newFileLocation || newFileLocation === "root") {
-      newFileFolderPath = '/';
-    }
-    else if(newFileLocation === "current") {
-      newFileFolderPath = this.app.workspace.getActiveFile()?.parent?.path;
-    }
-    else{
-      newFileFolderPath = (this.app.vault as any).getConfig('newFileFolderPath');
+  cookFileCreator = async (newFileFolderPath?: string) => {
+    if(!newFileFolderPath) {
+      const newFileLocation = (this.app.vault as any).getConfig('newFileLocation');
+      if(newFileLocation === 'current') {
+        newFileFolderPath = this.app.workspace.getActiveFile()?.parent?.path;
+      }
+      else if(newFileLocation === 'folder') {
+        newFileFolderPath = (this.app.vault as any).getConfig('newFileFolderPath');
+      }
+      else {
+        newFileFolderPath = '/';
+      }
     }
 
-    if(!newFileFolderPath) newFileFolderPath = '/';
-    else if(!newFileFolderPath.endsWith('/')) newFileFolderPath += '/';
+    if(!newFileFolderPath.endsWith('/')) newFileFolderPath += '/';
 
     const originalPath = newFileFolderPath;
     newFileFolderPath = `${newFileFolderPath}${this.i18n.translate('label-untitled-file')}.cook`;
     let i = 0;
-    while(this.app.vault.getAbstractFileByPath(newFileFolderPath)) {
+    while(this.app.vault.getAbstractFileByPath(newFileFolderPath.replace(/^\//, ''))) {
       newFileFolderPath = `${originalPath}${this.i18n.translate('label-untitled-file')} ${++i}.cook`;
     }
     const newFile = await this.app.vault.create(newFileFolderPath, '');
